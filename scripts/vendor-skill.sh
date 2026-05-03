@@ -20,7 +20,6 @@ echo "Fetching skill '$SKILL_NAME' from repo '$REPO'..."
 if [ "$SKILL_NAME" = "all" ]; then
     echo "Vendoring all skills from repo '$REPO'..."
     npx skills add "$REPO" --all --agent claude-code --yes
-    exit 0
 else
     echo "Vendoring skill '$SKILL_NAME' from repo '$REPO'..."
     npx skills add "$REPO" --skill "$SKILL_NAME" --agent claude-code --yes

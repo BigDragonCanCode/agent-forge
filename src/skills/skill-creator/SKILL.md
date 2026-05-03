@@ -52,6 +52,7 @@ Start by understanding the user's intent. The current conversation might already
 2. When should this skill trigger? (what user phrases/contexts)
 3. What's the expected output format?
 4. Should we set up test cases to verify the skill works? Skills with objectively verifiable outputs (file transforms, data extraction, code generation, fixed workflow steps) benefit from test cases. Skills with subjective outputs (writing style, art) often don't need them. Suggest the appropriate default based on the skill type, but let the user decide.
+5. Where should the skill be created? If the user has no preference, default to `src/skills`.
 
 ### Interview and Research
 

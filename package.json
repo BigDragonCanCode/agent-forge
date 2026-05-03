@@ -1,0 +1,14 @@
+{
+  "name": "agent-forge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Utilities for vendoring and managing agent skills.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "vendor-skill": "bash scripts/vendor-skill.sh",
+    "vendor-skill:help": "bash scripts/vendor-skill.sh"
+  }
+}

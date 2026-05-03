@@ -29,8 +29,8 @@ SOURCE=".claude/skills/$SKILL_NAME"
 echo "Vendoring skill '$SKILL_NAME' to src/skills/$SKILL_NAME..."
 mkdir -p src/skills #create skills directory if it doesn't exist
 
-for d in .claude/skills/*; do [ -d "$d" ] || continue; mv "$d" "src/skills/"; done
-echo "Skill '$SKILL_NAME' has been vendored successfully!"
-
-rm -rf .claude/
-echo "Cleaned up temporary skill files from .claude/skills/"
+for d in .claude/skills/*; 
+    do [ -d "$d" ] || continue; 
+    mv "$d" "src/skills/";
+    rm -rf ".claude/skills/$d"; done
+echo "Skill '$SKILL_NAME' has been vendored successfully and cleaned up temporary skill files from .claude/skills/"

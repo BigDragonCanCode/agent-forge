@@ -9,6 +9,6 @@
   },
   "scripts": {
     "vendor-skill": "bash scripts/vendor-skill.sh",
-    "vendor-skill:help": "bash scripts/vendor-skill.sh"
+    "publish-skill": "bash scripts/publish-skill.sh"
   }
 }

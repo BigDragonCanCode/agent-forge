@@ -41,6 +41,7 @@ Use these agent names unless the user provides replacements:
 - Use empty checkboxes for stages and actionable tasks.
 - Make each task a single concrete action that should take about five minutes. Do not split aggressively if the task is already atomic.
 - If every task in a stage belongs to the same owner, declare the owner once at the stage level and do not repeat the agent name on each task line.
+- When a stage intentionally mixes owners, write `- Owner: mixed` at the stage level and annotate every task with its owner using the suffix ` (Owner: \`agent\`)`.
 - Only annotate an individual task with an agent name when that task is owned by someone different from the stage owner.
 - Do not create code, tickets, follow-up files, or execution logs as part of this skill.
 - Exception: when the interview requires more than 2 questions in one round, create or overwrite a single Markdown question file for user answers.
@@ -79,8 +80,9 @@ Use this structure:
 - [ ] <task>
 
 ### Stage 2: <name>
-- Owner: `agent`
-- [ ] <task>
+- Owner: mixed
+- [ ] <task> (Owner: `frontend`)
+- [ ] <task> (Owner: `backend`)
 
 ## Open Questions
 - <question or unresolved point>

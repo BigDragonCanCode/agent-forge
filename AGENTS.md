@@ -15,6 +15,13 @@ There is no single repo-wide build step today. Many skills ship their own helper
 ## Coding Style & Naming Conventions
 Keep Markdown direct and procedural. Skill directories use lowercase kebab-case such as `slack-gif-creator`; required entry file is always `SKILL.md`. Prefer small, focused helper scripts under a skill-local `scripts/` directory. Shell scripts should be portable Bash with `set -e` unless stricter flags are justified. Preserve existing indentation in touched files; current shell and JSON files use 2 spaces or simple no-indent key/value formatting.
 
+## Agent Workflow Preferences
+- Do not ask for approval before normal file edits. Proceed directly with routine code and documentation changes.
+- Ask only for dangerous, destructive, or permission-blocked actions.
+- The main agent should act primarily as an orchestrator.
+- When the user asks to do work, prefer dispatching the task to subagents so the main agent keeps context light and worker context stays fresh.
+- Keep orchestration explicit: assign clear ownership and avoid overlapping edit scopes between subagents.
+
 ## Testing Guidelines
 There is no centralized test runner or coverage gate. Validate changes at the skill level:
 

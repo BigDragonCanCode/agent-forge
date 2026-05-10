@@ -13,10 +13,13 @@ Turn rough ideas into a short Markdown spec that another worker can implement.
 - Focus on discovery and architecture. Do not expand into a full delivery workflow unless the user asks.
 - This skill only writes the plan down. Do not execute the plan, dispatch workers, run implementation steps, or carry out the spec after drafting it.
 - Keep the spec short and readable, but do not drop important constraints or decisions.
+- Keep chat output visually light. Avoid large console paragraphs when a file-based prompt is clearer.
 - Only add items to the actionable plan after the user explicitly agrees.
 - Ask the user clarifying questions first when the request is ambiguous or materially underspecified.
 - If the request is already clear enough, do not print the full Markdown draft in chat first. Write the spec file directly, then tell the user the file was created and ask whether they want anything changed.
 - If the user disagrees with a section or step, rewrite only that part unless a larger rewrite is clearly necessary.
+- If there are more than 2 clarifying questions in a round, write them to a separate Markdown question file in the working directory so the user can answer there instead of in chat.
+- When re-asking questions in a later round, overwrite the existing question file unless the user asks to preserve previous prompts.
 
 ## Default agent roster
 
@@ -32,7 +35,7 @@ Use these agent names unless the user provides replacements:
 
 ## Output rules
 
-- The only artifact this skill should create is one Markdown spec file in the working directory unless the user specifies another path.
+- By default, the only artifact this skill should create is one Markdown spec file in the working directory unless the user specifies another path.
 - Choose a short descriptive slug and end the filename with `-spec.md`.
 - Use a consistent structure so workers know where to look.
 - Use empty checkboxes for stages and actionable tasks.
@@ -40,6 +43,8 @@ Use these agent names unless the user provides replacements:
 - If every task in a stage belongs to the same owner, declare the owner once at the stage level and do not repeat the agent name on each task line.
 - Only annotate an individual task with an agent name when that task is owned by someone different from the stage owner.
 - Do not create code, tickets, follow-up files, or execution logs as part of this skill.
+- Exception: when the interview requires more than 2 questions in one round, create or overwrite a single Markdown question file for user answers.
+- Keep the question file compact and scannable. Prefer numbered prompts with short answer slots.
 
 ## Approval rule
 
@@ -95,6 +100,12 @@ Resolve these before writing the spec:
 - what should be staged now versus logged for later
 
 Ask only useful questions, but keep asking until the plan is unambiguous enough to hand to a worker.
+
+When asking questions:
+
+- If there are 1-2 short questions, ask them in chat.
+- If there are more than 2 questions, write or overwrite a Markdown question file, then tell the user where to answer it.
+- Once the user says they finished answering the file, read it and continue the interview or write the spec.
 
 Once the plan is clear:
 

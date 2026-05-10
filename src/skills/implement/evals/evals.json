@@ -1,0 +1,23 @@
+{
+  "skill_name": "implement",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Implement stage 2 from `auth-flow-spec.md`. The stage owner is `backend`. Finish the unchecked tasks for that stage, update the checkboxes when each task is done, and keep a short work log with any implementation decisions the spec left open.",
+      "expected_output": "The agent finds the requested stage in the spec, executes only that stage, dispatches the `backend` owner or performs equivalent inline work, checks completed tasks in the spec, and records concise implementation notes in a sibling work-log Markdown file.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Implement stage 3 in `search-index-spec.md`. That stage says `Owner: mixed`, so use the owner beside each task. I want the completed tasks checked off and the unresolved implementation choices documented briefly.",
+      "expected_output": "The agent treats the stage as mixed ownership, groups or dispatches tasks by the per-task owner annotations, updates only the completed checkboxes for stage 3, and appends short decision notes to the work log.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Please implement stage 1 from the only `-spec.md` file in this folder. If the spec says to store data but doesn't say how, choose a sensible in-memory structure, note the reason in a work log, and avoid touching later stages.",
+      "expected_output": "The agent auto-selects the single obvious spec file, limits work to stage 1, makes reasonable local implementation choices when the spec omits low-level details, records the rationale in the work log, and leaves later stages unchanged.",
+      "files": []
+    }
+  ]
+}

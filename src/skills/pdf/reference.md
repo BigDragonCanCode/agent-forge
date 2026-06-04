@@ -1,11 +1,11 @@
 # PDF Processing Advanced Reference
 
-This document contains advanced PDF processing features, detailed examples, and additional libraries not covered in the main skill instructions.
+Doc have advanced PDF tricks, deep examples, extra libraries not in main skill.
 
 ## pypdfium2 Library (Apache/BSD License)
 
 ### Overview
-pypdfium2 is a Python binding for PDFium (Chromium's PDF library). It's excellent for fast PDF rendering, image generation, and serves as a PyMuPDF replacement.
+pypdfium2 = Python binding for PDFium (Chromium PDF library). Good for fast render, image make, PyMuPDF replacement.
 
 ### Render PDF to Images
 ```python
@@ -47,7 +47,7 @@ for i, page in enumerate(pdf):
 
 ### pdf-lib (MIT License)
 
-pdf-lib is a powerful JavaScript library for creating and modifying PDF documents in any JavaScript environment.
+pdf-lib = strong JavaScript library for create + modify PDF in any JavaScript env.
 
 #### Load and Manipulate Existing PDF
 ```javascript
@@ -169,7 +169,7 @@ async function mergePDFs() {
 
 ### pdfjs-dist (Apache License)
 
-PDF.js is Mozilla's JavaScript library for rendering PDFs in the browser.
+PDF.js = Mozilla JavaScript library for browser PDF render.
 
 #### Basic PDF Loading and Rendering
 ```javascript
@@ -528,22 +528,22 @@ with open("cropped.pdf", "wb") as output:
 ## Performance Optimization Tips
 
 ### 1. For Large PDFs
-- Use streaming approaches instead of loading entire PDF in memory
-- Use `qpdf --split-pages` for splitting large files
-- Process pages individually with pypdfium2
+- Use streaming, not whole PDF in memory
+- Use `qpdf --split-pages` to split big files
+- Process pages one by one with pypdfium2
 
 ### 2. For Text Extraction
-- `pdftotext -bbox-layout` is fastest for plain text extraction
-- Use pdfplumber for structured data and tables
-- Avoid `pypdf.extract_text()` for very large documents
+- `pdftotext -bbox-layout` fastest for plain text extract
+- Use pdfplumber for structured data + tables
+- Avoid `pypdf.extract_text()` on very large docs
 
 ### 3. For Image Extraction
-- `pdfimages` is much faster than rendering pages
-- Use low resolution for previews, high resolution for final output
+- `pdfimages` much faster than page render
+- Use low res for preview, high res for final
 
 ### 4. For Form Filling
-- pdf-lib maintains form structure better than most alternatives
-- Pre-validate form fields before processing
+- pdf-lib keep form structure better than most others
+- Pre-check form fields before processing
 
 ### 5. Memory Management
 ```python

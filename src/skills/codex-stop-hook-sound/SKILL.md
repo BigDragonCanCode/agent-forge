@@ -1,25 +1,25 @@
 ---
 name: codex-stop-hook-sound
-description: Set up or repair a Codex completion sound using the global Stop hook. Use this skill whenever the user wants a completion sound, stop-hook sound, end-of-turn sound, notification audio, or asks about `~/.codex/config.toml`, `hooks.Stop`, `ffplay`, or `play_completion_sound.sh`. This skill is specifically for wiring a local audio file into Codex's global Stop hook with a fast fire-and-forget `ffplay` script.
+description: Setup/fix Codex completion sound with global Stop hook. Use skill when user want completion sound, stop-hook sound, end-of-turn sound, notification audio, or ask about `~/.codex/config.toml`, `hooks.Stop`, `ffplay`, or `play_completion_sound.sh`. Skill for wiring local audio file into Codex global Stop hook with fast fire-and-forget `ffplay` script.
 ---
 
 # Codex Stop Hook Sound
 
-Set up a global Codex Stop hook that plays a local sound file quickly with `ffplay`.
+Setup global Codex Stop hook. Play local sound fast with `ffplay`.
 
 ## First question
 
-Before making any changes, ask whether the user already has the sound file.
+Before any change, ask if user already have sound file.
 
-Use this exact decision flow:
+Use exact decision flow:
 
-1. Ask whether they already have the sound file.
-2. If they do not have it, explicitly ask them to upload it to:
+1. Ask if user already have sound file.
+2. If not, explicitly tell user upload it to:
    - `~/.codex/formula-1-box-box.wav`
-3. Also tell them they can upload it anywhere they want and just tell you the full path instead.
-4. Do not continue with hook setup until you know the sound file path.
+3. Also tell user can upload anywhere, then tell you full path.
+4. No continue hook setup until sound file path known.
 
-Use wording equivalent to:
+Use wording like:
 
 ```text
 Do you already have the sound file? If not, please upload it to ~/.codex/formula-1-box-box.wav, or upload it anywhere you want and tell me the full path.
@@ -27,27 +27,27 @@ Do you already have the sound file? If not, please upload it to ~/.codex/formula
 
 ## Default paths
 
-Use these exact default locations unless the user gives a different audio-file path:
+Use exact default locations unless user gives different audio-file path:
 
 - Audio file: `~/.codex/formula-1-box-box.wav`
 - Hook script: `~/.codex/hooks/play_completion_sound.sh`
 - Codex config: `~/.codex/config.toml`
 
-If the user provides a different audio-file path, keep the hook script location and config location the same, and only change the WAV path inside the script.
+If user gives different audio-file path, keep hook script location and config location same. Only change WAV path inside script.
 
 ## Required behavior
 
-- Prefer `ffplay` over `powershell.exe` for this workflow.
-- Use a fire-and-forget hook so the Stop hook returns immediately.
+- Prefer `ffplay`, not `powershell.exe`, for this workflow.
+- Use fire-and-forget hook so Stop hook return immediately.
 - Preserve unrelated config in `~/.codex/config.toml`.
-- If `[[hooks.Stop]]` already exists, update only the relevant command hook instead of rewriting unrelated hook entries unless the user asks for a full reset.
+- If `[[hooks.Stop]]` already exist, update only relevant command hook. Do not rewrite unrelated hook entries unless user ask full reset.
 - Ensure `[features]` contains `codex_hooks = true`.
-- Ensure `~/.codex/hooks` exists before writing the script.
-- Make the hook script executable.
+- Ensure `~/.codex/hooks` exist before writing script.
+- Make hook script executable.
 
 ## Exact hook script
 
-Write this exact script, changing only the WAV path if the user supplied a different one:
+Write exact script below. Change only WAV path if user supplied different one:
 
 File: `~/.codex/hooks/play_completion_sound.sh`
 
@@ -57,7 +57,7 @@ set -euo pipefail
 nohup ffplay -nodisp -autoexit -loglevel error "/home/coding_dragon/.codex/formula-1-box-box.wav" >/dev/null 2>&1 </dev/null &
 ```
 
-If the user gave a custom path, substitute only this string:
+If user gave custom path, substitute only this string:
 
 ```text
 /home/coding_dragon/.codex/formula-1-box-box.wav
@@ -65,7 +65,7 @@ If the user gave a custom path, substitute only this string:
 
 ## Exact config snippet
 
-Ensure `~/.codex/config.toml` contains this exact Stop hook configuration:
+Ensure `~/.codex/config.toml` contains exact Stop hook config:
 
 ```toml
 [features]
@@ -82,41 +82,41 @@ statusMessage = "Playing completion sound"
 
 Important:
 
-- Reuse the exact command path above.
-- Reuse the exact `statusMessage`.
-- Reuse the exact timeout.
+- Reuse exact command path above.
+- Reuse exact `statusMessage`.
+- Reuse exact timeout.
 - Do not remove unrelated project settings, model settings, or other hooks.
 
 ## Setup workflow
 
 Follow this order:
 
-1. Confirm the audio-file path with the user.
-2. Check whether `ffplay` exists.
+1. Confirm audio-file path with user.
+2. Check if `ffplay` exists.
 3. Create `~/.codex/hooks` if needed.
-4. Write `~/.codex/hooks/play_completion_sound.sh` using the exact script above.
-5. Mark the script executable.
-6. Update `~/.codex/config.toml` to ensure the exact Stop hook block is present.
-7. Manually run the script once to verify that it executes.
-8. If the user wants lower latency, keep the fire-and-forget version above.
+4. Write `~/.codex/hooks/play_completion_sound.sh` with exact script above.
+5. Mark script executable.
+6. Update `~/.codex/config.toml` so exact Stop hook block present.
+7. Manually run script once to verify it executes.
+8. If user want lower latency, keep fire-and-forget version above.
 
 ## Verification
 
 After setup:
 
-1. Show the final script path and the audio-file path in use.
+1. Show final script path and audio-file path in use.
 2. Manually run:
 
 ```bash
 bash ~/.codex/hooks/play_completion_sound.sh
 ```
 
-3. Ask the user whether they heard the sound.
-4. Since this setup is known to work well in this environment, treat "did you hear it?" as the primary user-facing verification step.
-5. Tell the user whether the script exited successfully.
-6. If needed, measure the wall time and note that fire-and-forget should return almost immediately.
+3. Ask user if they heard sound.
+4. This setup known work well in this environment, so treat "did you hear it?" as primary user-facing verification.
+5. Tell user if script exited successfully.
+6. If needed, measure wall time and note fire-and-forget should return almost immediately.
 
-Use wording equivalent to:
+Use wording like:
 
 ```text
 I manually triggered the sound just now. Did you hear it?
@@ -124,22 +124,22 @@ I manually triggered the sound just now. Did you hear it?
 
 ## Troubleshooting
 
-If the script runs successfully but the user hears nothing:
+If script runs successfully but user hears nothing:
 
-- Verify the WAV path is correct.
-- Verify `ffplay` is installed.
-- Suspect audio-device or output-routing issues rather than hook syntax.
+- Verify WAV path correct.
+- Verify `ffplay` installed.
+- Suspect audio-device or output-routing issue, not hook syntax.
 
-If `ffplay` is missing:
+If `ffplay` missing:
 
-- Tell the user the setup depends on `ffplay`.
-- Ask whether they want you to install or configure it.
+- Tell user setup depends on `ffplay`.
+- Ask if they want you to install or configure it.
 
-If the user asks whether PowerShell is OK:
+If user asks whether PowerShell is OK:
 
-- Explain that `powershell.exe` plus synchronous playback is usually slower in this setup.
-- Prefer the `ffplay` backgrounded script above.
+- Explain `powershell.exe` plus synchronous playback usually slower in this setup.
+- Prefer `ffplay` backgrounded script above.
 
 ## Bundled asset
 
-The exact script is also bundled at `assets/play_completion_sound.sh`. Use it as the source of truth when copying the hook script into `~/.codex/hooks/play_completion_sound.sh`.
+Exact script also bundled at `assets/play_completion_sound.sh`. Use as source of truth when copying hook script into `~/.codex/hooks/play_completion_sound.sh`.

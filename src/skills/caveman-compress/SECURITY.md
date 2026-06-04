@@ -2,30 +2,30 @@
 
 ## Snyk High Risk Rating
 
-`caveman-compress` receives a Snyk High Risk rating due to static analysis heuristics. This document explains what the skill does and does not do.
+`caveman-compress` get Snyk High Risk rating from static analysis guesswork. This doc say what skill do and not do.
 
 ### What triggers the rating
 
-1. **subprocess usage**: The skill calls the `claude` CLI via `subprocess.run()` as a fallback when `ANTHROPIC_API_KEY` is not set. The subprocess call uses a fixed argument list — no shell interpolation occurs. User file content is passed via stdin, not as a shell argument.
+1. **subprocess usage**: Skill call `claude` CLI with `subprocess.run()` as fallback when `ANTHROPIC_API_KEY` not set. Subprocess use fixed arg list. No shell interpolation. User file content go by stdin, not shell arg.
 
-2. **File read/write**: The skill reads the file the user explicitly points it at, compresses it, and writes the result back to the same path. A `.original.md` backup is saved alongside it. No files outside the user-specified path are read or written.
+2. **File read/write**: Skill read file user point to, compress it, write back same path. Save `.original.md` backup next to it. No read or write outside user path.
 
 ### What the skill does NOT do
 
-- Does not execute user file content as code
-- Does not make network requests except to Anthropic's API (via SDK or CLI)
-- Does not access files outside the path the user provides
-- Does not use shell=True or string interpolation in subprocess calls
-- Does not collect or transmit any data beyond the file being compressed
+- Not execute user file content as code
+- Not make network requests except Anthropic's API (via SDK or CLI)
+- Not access files outside path user provide
+- Not use shell=True or string interpolation in subprocess calls
+- Not collect or transmit data beyond file being compressed
 
 ### Auth behavior
 
-If `ANTHROPIC_API_KEY` is set, the skill uses the Anthropic Python SDK directly (no subprocess). If not set, it falls back to the `claude` CLI, which uses the user's existing Claude desktop authentication.
+If `ANTHROPIC_API_KEY` set, skill use Anthropic Python SDK direct, no subprocess. If not set, fall back to `claude` CLI, which use user existing Claude desktop auth.
 
 ### File size limit
 
-Files larger than 500KB are rejected before any API call is made.
+Files bigger than 500KB get rejected before any API call.
 
 ### Reporting a vulnerability
 
-If you believe you've found a genuine security issue, please open a GitHub issue with the label `security`.
+If you think real security issue found, open GitHub issue with label `security`.

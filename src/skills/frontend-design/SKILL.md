@@ -1,42 +1,42 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
-license: Complete terms in LICENSE.txt
+description: Make distinct, production-grade frontend UI with strong design quality. Use when user ask build web components, pages, artifacts, posters, or apps (websites, landing pages, dashboards, React components, HTML/CSS layouts, or styling/beautifying web UI). Make creative, polished code and UI; avoid generic AI look.
+license: Full terms in LICENSE.txt
 ---
 
-This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+This skill guide making distinct, production-grade frontend UI. Avoid generic "AI slop" look. Build real working code with extreme care for aesthetics and creative choices.
 
-The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+User give frontend needs: component, page, app, or interface to build. User may give context on purpose, audience, or tech limits.
 
 ## Design Thinking
 
-Before coding, understand the context and commit to a BOLD aesthetic direction:
-- **Purpose**: What problem does this interface solve? Who uses it?
-- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
-- **Constraints**: Technical requirements (framework, performance, accessibility).
-- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
+Before coding, understand context. Pick BOLD aesthetic direction:
+- **Purpose**: What problem interface solve? Who use it?
+- **Tone**: Pick strong style: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. Use as spark, but make design true to chosen direction.
+- **Constraints**: Tech needs (framework, performance, accessibility).
+- **Differentiation**: What make this UNFORGETTABLE? What one thing people remember?
 
-**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
+**CRITICAL**: Pick clear concept direction. Execute with precision. Bold maximalism and refined minimalism both good. Key is intentionality, not intensity.
 
-Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
+Then build working code (HTML/CSS/JS, React, Vue, etc.) that is:
 - Production-grade and functional
 - Visually striking and memorable
-- Cohesive with a clear aesthetic point-of-view
+- Cohesive with clear aesthetic point-of-view
 - Meticulously refined in every detail
 
 ## Frontend Aesthetics Guidelines
 
 Focus on:
-- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
-- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
-- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
-- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
-- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+- **Typography**: Pick fonts beautiful, unique, interesting. Avoid generic fonts like Arial and Inter; pick distinct ones that lift frontend aesthetics; unexpected fonts with character. Pair distinct display font with refined body font.
+- **Color & Theme**: Commit to cohesive aesthetic. Use CSS variables for consistency. Strong dominant colors with sharp accents beat timid, evenly spread palettes.
+- **Motion**: Use animation for effects and micro-interactions. Prefer CSS-only for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) gives more delight than scattered micro-interactions. Use scroll triggers and hover states that surprise.
+- **Spatial Composition**: Use unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
+- **Backgrounds & Visual Details**: Build atmosphere and depth, not just solid colors. Add contextual effects and textures matching overall aesthetic. Use gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
 
-NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
+NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (especially purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design with no context-specific character.
 
-Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
+Interpret creatively. Make unexpected choices that feel truly designed for context. No design should be same. Vary light and dark themes, fonts, aesthetics. NEVER drift into common choices (Space Grotesk, for example) across generations.
 
-**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
+**IMPORTANT**: Match implementation complexity to aesthetic vision. Maximalist designs need elaborate code with many animations and effects. Minimalist or refined designs need restraint, precision, and careful spacing, typography, and subtle detail work. Elegance come from executing vision well.
 
-Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+Remember: Claude can do extraordinary creative work. Do not hold back. Show what truly can be made by thinking outside box and committing fully to distinct vision.

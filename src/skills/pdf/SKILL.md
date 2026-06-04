@@ -1,14 +1,14 @@
 ---
 name: pdf
-description: Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.
-license: Proprietary. LICENSE.txt has complete terms
+description: Use skill when user want anything with PDF files. Include reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If user mention .pdf file or ask produce one, use skill.
+license: Proprietary. LICENSE.txt has full terms
 ---
 
 # PDF Processing Guide
 
 ## Overview
 
-This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
+Guide cover core PDF processing tasks using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If need fill out PDF form, read FORMS.md and follow instructions.
 
 ## Quick Start
 
@@ -168,7 +168,7 @@ doc.build(story)
 
 #### Subscripts and Superscripts
 
-**IMPORTANT**: Never use Unicode subscript/superscript characters (₀₁₂₃₄₅₆₇₈₉, ⁰¹²³⁴⁵⁶⁷⁸⁹) in ReportLab PDFs. The built-in fonts do not include these glyphs, causing them to render as solid black boxes.
+**IMPORTANT**: Never use Unicode subscript/superscript characters (₀₁₂₃₄₅₆₇₈₉, ⁰¹²³⁴⁵⁶⁷⁸⁹) in ReportLab PDFs. Built-in fonts lack these glyphs, so they render as solid black boxes.
 
 Instead, use ReportLab's XML markup tags in Paragraph objects:
 ```python
@@ -184,7 +184,7 @@ chemical = Paragraph("H<sub>2</sub>O", styles['Normal'])
 squared = Paragraph("x<super>2</super> + y<super>2</super>", styles['Normal'])
 ```
 
-For canvas-drawn text (not Paragraph objects), manually adjust font the size and position rather than using Unicode subscripts/superscripts.
+For canvas-drawn text (not Paragraph objects), adjust font size and position by hand instead of using Unicode subscripts/superscripts.
 
 ## Command-Line Tools
 
@@ -308,7 +308,7 @@ with open("encrypted.pdf", "wb") as output:
 
 ## Next Steps
 
-- For advanced pypdfium2 usage, see REFERENCE.md
+- For advanced pypdfium2 use, see REFERENCE.md
 - For JavaScript libraries (pdf-lib), see REFERENCE.md
-- If you need to fill out a PDF form, follow the instructions in FORMS.md
+- If need fill out PDF form, follow instructions in FORMS.md
 - For troubleshooting guides, see REFERENCE.md

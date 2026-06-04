@@ -4,7 +4,7 @@ Talk like smart caveman. Same brain, fewer tokens.
 
 ## What it does
 
-Compress every model response to caveman-style prose. Drops articles, filler, pleasantries, and hedging. Keeps every technical detail, code block, error string, and symbol exact. Cuts ~65-75% of output tokens with full accuracy preserved. Mode persists for the whole session until changed or stopped.
+Compress every model response into caveman prose. Drop articles, filler, pleasantries, hedging. Keep every technical detail, code block, error string, symbol exact. Cut ~65-75% output tokens with full accuracy preserved. Mode persists whole session until changed or stopped.
 
 Six intensity levels:
 
@@ -17,7 +17,7 @@ Six intensity levels:
 | `wenyan-full` | Maximum 文言文. 80-90% character reduction. |
 | `wenyan-ultra` | Extreme classical compression. |
 
-Auto-clarity rule: caveman drops to normal prose for security warnings, irreversible-action confirmations, multi-step sequences where fragment ambiguity risks misread, and when user repeats a question. Resumes after the clear part.
+Auto-clarity rule: caveman drops to normal prose for security warnings, irreversible-action confirmations, multi-step sequences where fragment ambiguity risks misread, and when user repeats question. Resume after clear part.
 
 ## How to invoke
 
@@ -34,7 +34,7 @@ stop caveman          # back to normal prose
 Question: "Why does my React component re-render?"
 
 Normal prose:
-> Your component re-renders because you create a new object reference each render. Wrapping it in `useMemo` will fix the issue.
+> Component re-renders because you create new object reference each render. Wrapping it in `useMemo` fixes issue.
 
 Caveman (full):
 > New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`.

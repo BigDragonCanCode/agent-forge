@@ -1,29 +1,29 @@
 ---
 name: spec
-description: Create short implementation specs and planning contracts from ambiguous ideas. Use when the user wants to plan, scope, spec, decompose, or turn work into staged Markdown checklists with agent ownership. Also suggest this skill when the user is clearly asking to create a build plan, architecture plan, refactor plan, migration plan, bugfix plan, or implementation contract.
+description: Make short implementation specs and planning contracts from vague ideas. Use when user want plan, scope, spec, break down, or turn work into staged Markdown checklists with agent ownership. Also suggest this skill when user clearly ask for build plan, architecture plan, refactor plan, migration plan, bugfix plan, or implementation contract.
 ---
 
 # Spec
 
-Turn rough ideas into a short Markdown spec that another worker can implement.
+Turn rough idea into short Markdown spec another worker can build.
 
 ## Core behavior
 
-- Interview the user until ambiguity is gone. Keep probing instead of guessing.
-- Focus on discovery and architecture. Do not expand into a full delivery workflow unless the user asks.
-- This skill only writes the plan down. Do not execute the plan, dispatch workers, run implementation steps, or carry out the spec after drafting it.
-- Keep the spec short and readable, but do not drop important constraints or decisions.
-- Keep chat output visually light. Avoid large console paragraphs when a file-based prompt is clearer.
-- Only add items to the actionable plan after the user explicitly agrees.
-- Ask the user clarifying questions first when the request is ambiguous or materially underspecified.
-- If the request is already clear enough, do not print the full Markdown draft in chat first. Write the spec file directly, then tell the user the file was created and ask whether they want anything changed.
-- If the user disagrees with a section or step, rewrite only that part unless a larger rewrite is clearly necessary.
-- If there are more than 2 clarifying questions in a round, write them to a separate Markdown question file in the working directory so the user can answer there instead of in chat.
-- When re-asking questions in a later round, overwrite the existing question file unless the user asks to preserve previous prompts.
+- Interview user until ambiguity gone. Keep probing, no guessing.
+- Focus on discovery and architecture. Do not expand into full delivery workflow unless user asks.
+- This skill only write plan down. Do not execute plan, dispatch workers, run implementation steps, or carry out spec after draft.
+- Keep spec short and readable, but keep important constraints and decisions.
+- Keep chat output light. Avoid big console paragraphs when file-based prompt clearer.
+- Only add items to actionable plan after user explicitly agrees.
+- Ask clarifying questions first when request ambiguous or materially underspecified.
+- If request already clear enough, do not print full Markdown draft in chat first. Write spec file direct, then tell user file created and ask if they want changes.
+- If user disagrees with section or step, rewrite only that part unless bigger rewrite clearly needed.
+- If more than 2 clarifying questions in round, write them to separate Markdown question file in working directory so user can answer there, not in chat.
+- When re-asking questions in later round, overwrite existing question file unless user asks preserve previous prompts.
 
 ## Default agent roster
 
-Use these agent names unless the user provides replacements:
+Use these agent names unless user gives replacements:
 
 - `orchestrator`
 - `researcher`
@@ -35,28 +35,28 @@ Use these agent names unless the user provides replacements:
 
 ## Output rules
 
-- By default, the only artifact this skill should create is one Markdown spec file in the working directory unless the user specifies another path.
-- Choose a short descriptive slug and end the filename with `-spec.md`.
-- Use a consistent structure so workers know where to look.
+- By default, only artifact this skill should create is one Markdown spec file in working directory unless user gives another path.
+- Choose short descriptive slug and end filename with `-spec.md`.
+- Use consistent structure so workers know where look.
 - Use empty checkboxes for stages and actionable tasks.
-- Make each task a single concrete action that should take about five minutes. Do not split aggressively if the task is already atomic.
-- If every task in a stage belongs to the same owner, declare the owner once at the stage level and do not repeat the agent name on each task line.
-- When a stage intentionally mixes owners, write `- Owner: mixed` at the stage level and annotate every task with its owner using the suffix ` (Owner: \`agent\`)`.
-- Only annotate an individual task with an agent name when that task is owned by someone different from the stage owner.
+- Make each task one concrete action taking about five minutes. Do not split hard if task already atomic.
+- If every task in stage has same owner, declare owner once at stage level and do not repeat agent name on each task line.
+- When stage intentionally mixes owners, write `- Owner: mixed` at stage level and annotate every task with owner using suffix ` (Owner: \`agent\`)`.
+- Only annotate individual task with agent name when that task owned by someone different from stage owner.
 - Do not create code, tickets, follow-up files, or execution logs as part of this skill.
-- Exception: when the interview requires more than 2 questions in one round, create or overwrite a single Markdown question file for user answers.
-- Keep the question file compact and scannable. Prefer numbered prompts with short answer slots.
+- Exception: if interview needs more than 2 questions in one round, create or overwrite one Markdown question file for user answers.
+- Keep question file compact and easy scan. Prefer numbered prompts with short answer slots.
 
 ## Approval rule
 
-Possible work that has not been approved yet belongs in `Out of Scope`, not in the stage checklist.
+Possible work not approved yet belongs in `Out of Scope`, not in stage checklist.
 
-Do not move an item into the actionable plan until the user explicitly agrees.
+Do not move item into actionable plan until user explicitly agrees.
 
 ## Completion rule
 
-- Treat the skill as complete once the Markdown spec file is written and the user has had a chance to request changes.
-- Do not execute any stage, task, or agent assignment from the spec unless the user separately asks for execution outside this skill.
+- Skill complete once Markdown spec file written and user had chance request changes.
+- Do not execute any stage, task, or agent assignment from spec unless user separately asks for execution outside this skill.
 
 ## Spec template
 
@@ -93,31 +93,31 @@ Use this structure:
 
 ## Interview flow
 
-Resolve these before writing the spec:
+Resolve these before writing spec:
 
 - goal and success criteria
 - users or systems affected
 - constraints, risks, and non-goals
 - architecture choices that materially change implementation
-- what should be staged now versus logged for later
+- what should be staged now vs logged for later
 
-Ask only useful questions, but keep asking until the plan is unambiguous enough to hand to a worker.
+Ask only useful questions, but keep asking until plan clear enough to hand to worker.
 
 When asking questions:
 
-- If there are 1-2 short questions, ask them in chat.
-- If there are more than 2 questions, write or overwrite a Markdown question file, then tell the user where to answer it.
-- Once the user says they finished answering the file, read it and continue the interview or write the spec.
+- If 1-2 short questions, ask in chat.
+- If more than 2 questions, write or overwrite Markdown question file, then tell user where answer it.
+- Once user says they finished answering file, read it and continue interview or write spec.
 
-Once the plan is clear:
+Once plan clear:
 
-1. If clarification was needed, resolve the open points with the user first.
-2. Write the Markdown spec file directly instead of pasting the full file content into chat.
-3. Tell the user the file was created and ask whether they want any changes.
+1. If clarification needed, resolve open points with user first.
+2. Write Markdown spec file direct instead of pasting full file content into chat.
+3. Tell user file created and ask if they want changes.
 
 ## Revision flow
 
-- When the user changes one step, patch that step.
-- When the user rejects a whole section, rewrite that section and preserve the rest.
-- Preserve existing checkbox state unless the user asks to reset it.
-- Apply requested edits to the file directly and then tell the user it was updated.
+- When user changes one step, patch that step.
+- When user rejects whole section, rewrite that section and preserve rest.
+- Preserve existing checkbox state unless user asks reset it.
+- Apply requested edits to file direct, then tell user it was updated.

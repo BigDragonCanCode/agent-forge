@@ -360,24 +360,24 @@ Main thing to avoid: do not make should-not-trigger queries obviously irrelevant
 
 ### Step 2: Review with user
 
-Show eval set to user for review using HTML template:
+Present the eval set to the user for review using the HTML template:
 
-1. Read template from `assets/eval_review.html`
-2. Replace placeholders:
-   - `__EVAL_DATA_PLACEHOLDER__` → JSON array of eval items (no quotes, it is JS variable assignment)
-   - `__SKILL_NAME_PLACEHOLDER__` → skill name
-   - `__SKILL_DESCRIPTION_PLACEHOLDER__` → current skill description
-3. Write temp file (example `/tmp/eval_review_<skill-name>.html`) and open it: `open /tmp/eval_review_<skill-name>.html`
-4. User can edit queries, toggle should-trigger, add/remove entries, then click "Export Eval Set"
-5. File downloads to `~/Downloads/eval_set.json` — check Downloads for most recent version if multiple exist (example `eval_set (1).json`)
+1. Read the template from `assets/eval_review.html`
+2. Replace the placeholders:
+   - `__EVAL_DATA_PLACEHOLDER__` → the JSON array of eval items (no quotes around it — it's a JS variable assignment)
+   - `__SKILL_NAME_PLACEHOLDER__` → the skill's name
+   - `__SKILL_DESCRIPTION_PLACEHOLDER__` → the skill's current description
+3. Write to a temp file (e.g., `/tmp/eval_review_<skill-name>.html`) and open it: `open /tmp/eval_review_<skill-name>.html`
+4. The user can edit queries, toggle should-trigger, add/remove entries, then click "Export Eval Set"
+5. The file downloads to `~/Downloads/eval_set.json` — check the Downloads folder for the most recent version in case there are multiple (e.g., `eval_set (1).json`)
 
-This step matters. Bad eval queries produce bad descriptions.
+This step matters — bad eval queries lead to bad descriptions.
 
 ### Step 3: Run the optimization loop
 
-Tell user: "This will take some time — I'll run the optimization loop in the background and check on it periodically."
+Tell the user: "This will take some time — I'll run the optimization loop in the background and check on it periodically."
 
-Save eval set to workspace, then run in background:
+Save the eval set to the workspace, then run in the background:
 
 ```bash
 python -m scripts.run_loop \
@@ -388,17 +388,17 @@ python -m scripts.run_loop \
   --verbose
 ```
 
-Use model ID from your system prompt, the one powering current session, so triggering test matches actual user experience.
+Use the model ID from your system prompt (the one powering the current session) so the triggering test matches what the user actually experiences.
 
-While it runs, periodically tail output and update user on iteration number and scores.
+While it runs, periodically tail the output to give the user updates on which iteration it's on and what the scores look like.
 
-This handles full optimization loop automatically. It splits eval set into 60% train and 40% held-out test, evaluates current description (each query run 3 times for reliable trigger rate), then calls Claude to propose improvements from failures. It re-evaluates each new description on train and test, iterating up to 5 times. When done, it opens HTML report in browser showing per-iteration results and returns JSON with `best_description`, chosen by test score instead of train score to reduce overfitting.
+This handles the full optimization loop automatically. It splits the eval set into 60% train and 40% held-out test, evaluates the current description (running each query 3 times to get a reliable trigger rate), then calls Claude to propose improvements based on what failed. It re-evaluates each new description on both train and test, iterating up to 5 times. When it's done, it opens an HTML report in the browser showing the results per iteration and returns JSON with `best_description` — selected by test score rather than train score to avoid overfitting.
 
 ### How skill triggering works
 
-Understanding trigger mechanism helps design better eval queries. Skills appear in Claude's `available_skills` list with name + description, and Claude decides whether to consult skill based on description. Important detail: Claude only consults skills for tasks it cannot easily do on its own. Simple one-step requests like "read this PDF" may not trigger a skill even if description matches perfectly, because Claude can do it directly with basic tools. Complex, multi-step, or specialized requests reliably trigger skills when description fits.
+Understanding the triggering mechanism helps design better eval queries. Skills appear in Claude's `available_skills` list with their name + description, and Claude decides whether to consult a skill based on that description. The important thing to know is that Claude only consults skills for tasks it can't easily handle on its own — simple, one-step queries like "read this PDF" may not trigger a skill even if the description matches perfectly, because Claude can handle them directly with basic tools. Complex, multi-step, or specialized queries reliably trigger skills when the description matches.
 
-This means eval queries should be substantial enough that Claude would truly benefit from consulting a skill. Simple queries like "read file X" are bad tests. They will not trigger skills regardless of description quality.
+This means your eval queries should be substantive enough that Claude would actually benefit from consulting a skill. Simple queries like "read file X" are poor test cases — they won't trigger skills regardless of description quality.
 
 ### Step 4: Apply the result
 
@@ -408,19 +408,19 @@ Take `best_description` from JSON output and update skill's SKILL.md frontmatter
 
 ### Package and Present (only if `present_files` tool is available)
 
-Check if you have `present_files` tool. If not, skip. If yes, package skill and present `.skill` file to user:
+Check whether you have access to the `present_files` tool. If you don't, skip this step. If you do, package the skill and present the .skill file to the user:
 
 ```bash
 python -m scripts.package_skill <path/to/skill-folder>
 ```
 
-After packaging, point user to resulting `.skill` file path so they can install it.
+After packaging, direct the user to the resulting `.skill` file path so they can install it.
 
 ---
 
 ## Claude.ai-specific instructions
 
-In Claude.ai, core workflow same (draft → test → review → improve → repeat), but because Claude.ai has no subagents, some mechanics change. Adapt like this:
+In Claude.ai, the core workflow is the same (draft → test → review → improve → repeat), but because Claude.ai doesn't have subagents, some mechanics change. Here's what to adapt:
 
 **Running test cases**: No subagents means no parallel execution. For each test case, read skill's SKILL.md, then follow its instructions yourself to complete test prompt. Do one at a time. Less rigorous than independent subagents because you wrote skill and also run it, so you have full context, but still useful sanity check. Human review step compensates. Skip baseline runs. Just use skill to complete task.
 
@@ -430,47 +430,47 @@ In Claude.ai, core workflow same (draft → test → review → improve → repe
 
 **The iteration loop**: Same as before: improve skill, rerun tests, ask feedback, repeat. Just without browser reviewer in middle. You may still organize results into iteration directories if filesystem exists.
 
-**Description optimization**: Needs `claude` CLI tool, specifically `claude -p`, which only exists in Claude Code. Skip in Claude.ai.
+**Description optimization**: This section requires the `claude` CLI tool (specifically `claude -p`) which is only available in Claude Code. Skip it if you're on Claude.ai.
 
 **Blind comparison**: Needs subagents. Skip.
 
-**Packaging**: `package_skill.py` works anywhere with Python and filesystem. In Claude.ai, run it and user can download resulting `.skill` file.
+**Packaging**: The `package_skill.py` script works anywhere with Python and a filesystem. On Claude.ai, you can run it and the user can download the resulting `.skill` file.
 
-**Updating an existing skill**: User may ask to update existing skill, not create new one. Then:
-- **Preserve the original name.** Keep skill directory name and `name` frontmatter unchanged. Example: if installed skill is `research-helper`, output `research-helper.skill`, not `research-helper-v2`.
-- **Copy to a writeable location before editing.** Installed skill path may be read-only. Copy to `/tmp/skill-name/`, edit there, package from copy.
-- **If packaging manually, stage in `/tmp/` first**, then copy to output directory. Direct writes may fail from permissions.
+**Updating an existing skill**: The user might be asking you to update an existing skill, not create a new one. In this case:
+- **Preserve the original name.** Note the skill's directory name and `name` frontmatter field -- use them unchanged. E.g., if the installed skill is `research-helper`, output `research-helper.skill` (not `research-helper-v2`).
+- **Copy to a writeable location before editing.** The installed skill path may be read-only. Copy to `/tmp/skill-name/`, edit there, and package from the copy.
+- **If packaging manually, stage in `/tmp/` first**, then copy to the output directory -- direct writes may fail due to permissions.
 
 ---
 
 ## Cowork-Specific Instructions
 
-If you are in Cowork, main points:
+If you're in Cowork, the main things to know are:
 
-- You do have subagents, so main workflow works: parallel test runs, baselines, grading, etc. (If severe timeout trouble happens, serial test runs are acceptable.)
-- You do not have browser/display, so when generating eval viewer, use `--static <output_path>` to write standalone HTML instead of starting server. Then offer link user can click in browser.
-- For some reason, Cowork setup seems to discourage Claude from generating eval viewer after tests, so repeating this plainly: whether in Cowork or Claude Code, after tests you should always generate eval viewer for human review before revising skill yourself, using `generate_review.py` and not custom HTML. Sorry for all caps but: GENERATE THE EVAL VIEWER *BEFORE* evaluating inputs yourself. Human should see outputs ASAP.
-- Feedback differs: since no running server, viewer's "Submit All Reviews" button downloads `feedback.json` as file. Then read it from there (may need access first).
-- Packaging works. `package_skill.py` just needs Python and filesystem.
-- Description optimization (`run_loop.py` / `run_eval.py`) should work in Cowork because it uses `claude -p` via subprocess, not browser, but save it until skill fully done and user agrees quality is good.
-- **Updating an existing skill**: User may be asking to update existing skill, not create new one. Follow update guidance from claude.ai section above.
+- You have subagents, so the main workflow (spawn test cases in parallel, run baselines, grade, etc.) all works. (However, if you run into severe problems with timeouts, it's OK to run the test prompts in series rather than parallel.)
+- You don't have a browser or display, so when generating the eval viewer, use `--static <output_path>` to write a standalone HTML file instead of starting a server. Then proffer a link that the user can click to open the HTML in their browser.
+- For whatever reason, the Cowork setup seems to disincline Claude from generating the eval viewer after running the tests, so just to reiterate: whether you're in Cowork or in Claude Code, after running tests, you should always generate the eval viewer for the human to look at examples before revising the skill yourself and trying to make corrections, using `generate_review.py` (not writing your own boutique html code). Sorry in advance but I'm gonna go all caps here: GENERATE THE EVAL VIEWER *BEFORE* evaluating inputs yourself. You want to get them in front of the human ASAP!
+- Feedback works differently: since there's no running server, the viewer's "Submit All Reviews" button will download `feedback.json` as a file. You can then read it from there (you may have to request access first).
+- Packaging works — `package_skill.py` just needs Python and a filesystem.
+- Description optimization (`run_loop.py` / `run_eval.py`) should work in Cowork just fine since it uses `claude -p` via subprocess, not a browser, but please save it until you've fully finished making the skill and the user agrees it's in good shape.
+- **Updating an existing skill**: The user might be asking you to update an existing skill, not create a new one. Follow the update guidance in the claude.ai section above.
 
 ---
 
 ## Reference files
 
-The agents/ directory has instructions for specialized subagents. Read when you need to spawn that subagent.
+The agents/ directory contains instructions for specialized subagents. Read them when you need to spawn the relevant subagent.
 
 - `agents/grader.md` — How to evaluate assertions against outputs
 - `agents/comparator.md` — How to do blind A/B comparison between two outputs
 - `agents/analyzer.md` — How to analyze why one version beat another
 
-The references/ directory has extra docs:
+The references/ directory has additional documentation:
 - `references/schemas.md` — JSON structures for evals.json, grading.json, etc.
 
 ---
 
-Repeating core loop one more time for emphasis:
+Repeating one more time the core loop here for emphasis:
 
 - Figure out what skill is about
 - Draft or edit skill
@@ -479,8 +479,8 @@ Repeating core loop one more time for emphasis:
   - Create benchmark.json and run `eval-viewer/generate_review.py` to help user review
   - Run quantitative evals
 - Repeat until you and user are satisfied
-- Package final skill and return it to user
+- Package the final skill and return it to the user.
 
-Please add steps to your TodoList, if you have such a thing, so you do not forget. If you are in Cowork, specifically add "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" to TodoList so that happens.
+Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. If you're in Cowork, please specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
 
 Good luck!

@@ -21,11 +21,10 @@ Agent read `CLAUDE.md` every session start. File big, cost big. Caveman make fil
 ```
 
 ```
-CLAUDE.md          ← compressed (Claude reads this — fewer tokens every session)
-CLAUDE.original.md ← human-readable backup (you edit this)
+CLAUDE.md ← compressed in place (fewer tokens every session)
 ```
 
-Original never lost. You read and edit `.original.md`. Run skill again after edits to recompress.
+Skill overwrites target file directly. No `.original.md` backup file created.
 
 ## Benchmarks
 
@@ -102,6 +101,7 @@ Examples:
 | Extensionless natural language | ✅ Yes |
 | `.py`, `.js`, `.ts`, `.json`, `.yaml` | ❌ Skip (code/config) |
 | `*.original.md` | ❌ Skip (backup files) |
+| `LICENSE*` | ❌ Skip (never read or modify) |
 
 ## How It Work
 
@@ -121,7 +121,6 @@ if errors: same model fixes cherry-picked issues only   (tokens — targeted fix
 retry up to 2 times
         ↓
 write compressed → CLAUDE.md
-write original   → CLAUDE.original.md
 ```
 
 Only two things use tokens: initial compress + targeted fix if validation fails. Everything else local Python.

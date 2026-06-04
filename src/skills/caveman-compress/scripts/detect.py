@@ -101,6 +101,8 @@ def should_compress(filepath: Path) -> bool:
     """Return True if the file is natural language and should be compressed."""
     if not filepath.is_file():
         return False
+    if filepath.name.upper().startswith("LICENSE"):
+        return False
     # Skip backup files
     if filepath.name.endswith(".original.md"):
         return False

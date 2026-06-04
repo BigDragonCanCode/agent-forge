@@ -228,17 +228,9 @@ def compress_file(filepath: Path) -> bool:
         return False
 
     original_text = filepath.read_text(errors="ignore")
-    backup_path = filepath.with_name(filepath.stem + ".original.md")
 
     if not original_text.strip():
         print("❌ Refusing to compress: file is empty or whitespace-only.")
-        return False
-
-    # Check if backup already exists to prevent accidental overwriting
-    if backup_path.exists():
-        print(f"⚠️ Backup file already exists: {backup_path}")
-        print("The original backup may contain important content.")
-        print("Aborting to prevent data loss. Please remove or rename the backup file if you want to proceed.")
         return False
 
     # Step 1: Compress
@@ -256,47 +248,36 @@ def compress_file(filepath: Path) -> bool:
         print("   already in caveman form. Original file is untouched (no backup created).")
         return False
 
-    # Save original as backup, then verify the backup readback before
-    # touching the input file. If the filesystem dropped bytes (encoding,
-    # antivirus, disk full), unlink the bad backup and abort instead of
-    # leaving the user with a corrupt backup + compressed primary.
-    backup_path.write_text(original_text)
-    backup_readback = backup_path.read_text(errors="ignore")
-    if backup_readback != original_text:
-        print(f"❌ Backup write verification failed: {backup_path}")
-        print("   In-memory original differs from on-disk backup. Aborting before touching the input file.")
-        try:
-            backup_path.unlink()
-        except OSError:
-            pass
-        return False
-    filepath.write_text(compressed)
+    with tempfile.NamedTemporaryFile(mode="w+", suffix=filepath.suffix) as original_snapshot:
+        original_snapshot.write(original_text)
+        original_snapshot.flush()
 
-    # Step 2: Validate + Retry
-    for attempt in range(MAX_RETRIES):
-        print(f"\nValidation attempt {attempt + 1}")
-
-        result = validate(backup_path, filepath)
-
-        if result.is_valid:
-            print("Validation passed")
-            break
-
-        print("❌ Validation failed:")
-        for err in result.errors:
-            print(f"   - {err}")
-
-        if attempt == MAX_RETRIES - 1:
-            # Restore original on failure
-            filepath.write_text(original_text)
-            backup_path.unlink(missing_ok=True)
-            print("❌ Failed after retries — original restored")
-            return False
-
-        print("Fixing with model...")
-        compressed = call_model(
-            build_fix_prompt(original_text, compressed, result.errors)
-        )
         filepath.write_text(compressed)
+
+        # Step 2: Validate + Retry
+        for attempt in range(MAX_RETRIES):
+            print(f"\nValidation attempt {attempt + 1}")
+
+            result = validate(Path(original_snapshot.name), filepath)
+
+            if result.is_valid:
+                print("Validation passed")
+                break
+
+            print("❌ Validation failed:")
+            for err in result.errors:
+                print(f"   - {err}")
+
+            if attempt == MAX_RETRIES - 1:
+                # Restore original on failure
+                filepath.write_text(original_text)
+                print("❌ Failed after retries — original restored")
+                return False
+
+            print("Fixing with model...")
+            compressed = call_model(
+                build_fix_prompt(original_text, compressed, result.errors)
+            )
+            filepath.write_text(compressed)
 
     return True

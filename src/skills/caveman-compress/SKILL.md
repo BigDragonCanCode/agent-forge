@@ -3,7 +3,7 @@ name: caveman-compress
 description: >
   Compress natural language memory files (CLAUDE.md, todos, preferences) into caveman format
   to save input tokens. Preserves all technical substance, code, URLs, and structure.
-  Compressed version overwrites the original file. Human-readable backup saved as FILE.original.md.
+  Compressed version overwrites the original file. No backup file is created.
   Trigger: /caveman-compress FILEPATH or "compress memory file"
 ---
 
@@ -11,7 +11,7 @@ description: >
 
 ## Purpose
 
-Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`.
+Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. No backup file is created.
 
 ## Trigger
 
@@ -34,6 +34,7 @@ python3 -m scripts <absolute_filepath>
 - if errors: cherry-pick fix with same model backend (targeted fixes only, no recompression)
 - retry up to 2 times
 - if still failing after 2 retries: report error to user, leave original file untouched
+- skip files whose basename starts with `LICENSE`
 
 4. Return result to user
 
@@ -107,7 +108,8 @@ Compressed:
 
 - ONLY compress natural language files (.md, .txt, .typ, .typst, .tex, extensionless)
 - NEVER modify: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh
+- NEVER read or modify files whose basename starts with `LICENSE`
 - If file has mixed content (prose + code), compress ONLY the prose sections
 - If unsure whether something is code or prose, leave it unchanged
-- Original file is backed up as FILE.original.md before overwriting
+- Original file is kept only in memory during validation; no `.original.md` backup is written
 - Never compress FILE.original.md (skip it)

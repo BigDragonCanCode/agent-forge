@@ -3,20 +3,20 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I want to build a small internal dashboard for support tickets. Interview me first, then write a short spec with stages, 5-minute tasks, and agent owners. Keep future ideas out of the actionable plan unless I approve them.",
-      "expected_output": "A concise Markdown spec created after clarification, with clear discovery and architecture decisions, checkbox stages, explicit agent ownership, open questions, and unapproved work logged outside the actionable plan.",
+      "prompt": "I want to build a small internal dashboard for support tickets. Interview me first, then write a short spec with stages, 5-minute tasks, and agent owners. Keep future ideas out of the actionable plan unless I approve them. Every task must be directly actionable and written in caveman style.",
+      "expected_output": "A concise Markdown spec created after clarification, with clear discovery and architecture decisions, checkbox stages, explicit agent ownership, caveman-style wording, and only concrete immediately executable tasks. Unapproved work stays outside the actionable plan.",
       "files": []
     },
     {
       "id": 2,
-      "prompt": "Help me plan a refactor of our billing service. I need you to ask questions until the migration risks and boundaries are clear, then turn it into a worker-ready spec file.",
-      "expected_output": "A short refactor spec that clarifies service boundaries, risks, and staging, and breaks approved work into small tasks assigned to fixed agent roles.",
+      "prompt": "Help me plan a refactor of our billing service. I need you to ask questions until the migration risks and boundaries are clear, then turn it into a worker-ready spec file. Do not use vague tasks. Keep generated text caveman style.",
+      "expected_output": "A short refactor spec that clarifies service boundaries, risks, and staging, and breaks approved work into small caveman-style tasks with exact targets and fixed agent roles.",
       "files": []
     },
     {
       "id": 3,
-      "prompt": "I have an idea for a browser extension that saves snippets into project folders. Interview me and write a contract-style spec my workers can follow. Leave possible integrations in out-of-scope unless I explicitly approve them.",
-      "expected_output": "A concise product spec with resolved ambiguities, a consistent section layout, explicit task ownership, and optional integrations kept out of the actionable checklist.",
+      "prompt": "I have an idea for a browser extension that saves snippets into project folders. Interview me and write a contract-style spec my workers can follow. Leave possible integrations in out-of-scope unless I explicitly approve them. Task text must be actionable, not vague, and stay caveman style.",
+      "expected_output": "A concise product spec with resolved ambiguities, a consistent section layout, explicit task ownership, caveman-style phrasing, and optional integrations kept out of the actionable checklist. Tasks name concrete outputs instead of vague intent.",
       "files": []
     }
   ]

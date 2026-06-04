@@ -7,6 +7,8 @@ description: Make short implementation specs and planning contracts from vague i
 
 Turn rough idea into short Markdown spec another worker can build.
 
+Local style rule: `references/caveman-style.md`
+
 ## Core behavior
 
 - Interview user until ambiguity gone. Keep probing, no guessing.
@@ -20,6 +22,7 @@ Turn rough idea into short Markdown spec another worker can build.
 - If user disagrees with section or step, rewrite only that part unless bigger rewrite clearly needed.
 - If more than 2 clarifying questions in round, write them to separate Markdown question file in working directory so user can answer there, not in chat.
 - When re-asking questions in later round, overwrite existing question file unless user asks preserve previous prompts.
+- Every artifact this skill writes must follow local caveman style rule, including spec files, question files, and chat replies about generated output.
 
 ## Default agent roster
 
@@ -40,12 +43,16 @@ Use these agent names unless user gives replacements:
 - Use consistent structure so workers know where look.
 - Use empty checkboxes for stages and actionable tasks.
 - Make each task one concrete action taking about five minutes. Do not split hard if task already atomic.
+- Make every task directly executable by worker with no extra interpretation. Start with imperative verb and name concrete object, file, endpoint, test, or artifact to touch.
+- Ban vague task text like `investigate`, `handle`, `support`, `improve`, `refine`, `prepare`, `wire things up`, `do setup`, or `make it better` unless task also says exact output and target.
+- Discovery tasks still must produce concrete artifact, note, list, diff, decision, or file change. No placeholder research-only tasks.
 - If every task in stage has same owner, declare owner once at stage level and do not repeat agent name on each task line.
 - When stage intentionally mixes owners, write `- Owner: mixed` at stage level and annotate every task with owner using suffix ` (Owner: \`agent\`)`.
 - Only annotate individual task with agent name when that task owned by someone different from stage owner.
 - Do not create code, tickets, follow-up files, or execution logs as part of this skill.
 - Exception: if interview needs more than 2 questions in one round, create or overwrite one Markdown question file for user answers.
 - Keep question file compact and easy scan. Prefer numbered prompts with short answer slots.
+- Keep question prompts in caveman style too. Short, direct, no filler.
 
 ## Approval rule
 
@@ -91,6 +98,13 @@ Use this structure:
 - <possible future work or unapproved task>
 ```
 
+Task wording pattern:
+
+- Good: `- [ ] Add POST /tickets route in \`src/api/tickets.ts\` and return stub JSON`
+- Good: `- [ ] List current auth entry points in \`docs/auth-audit.md\``
+- Bad: `- [ ] Investigate ticket flow`
+- Bad: `- [ ] Improve backend`
+
 ## Interview flow
 
 Resolve these before writing spec:
@@ -108,6 +122,7 @@ When asking questions:
 - If 1-2 short questions, ask in chat.
 - If more than 2 questions, write or overwrite Markdown question file, then tell user where answer it.
 - Once user says they finished answering file, read it and continue interview or write spec.
+- Write questions in caveman style: short, direct, exact.
 
 Once plan clear:
 

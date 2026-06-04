@@ -7,6 +7,8 @@ description: Do one approved stage from `*-spec.md` impl spec by finding asked s
 
 Do one approved stage from spec written by `spec` skill or compatible `*-spec.md` file.
 
+Local style rule: `references/caveman-style.md`
+
 This skill complements `spec`:
 
 - `spec` write staged contract.
@@ -21,6 +23,7 @@ This skill complements `spec`:
 - Keep chat light. Put durable execution detail in files, not long chat recap.
 - Prefer dispatching subagents when environment supports. Main agent orchestrate, keep context small, integrate results.
 - If subagents unavailable, do inline while still following ownership and logging rules below.
+- Write work log entries and generated status text in local caveman style unless extra clarity needed for safety.
 
 ## Supported spec format
 
@@ -80,13 +83,14 @@ Good log entries are short and concrete:
 - why choice reasonable
 - whether simpler implementation intentionally chosen for speed, safety, or scope control
 - what more advanced alternative could replace later, if that tradeoff becomes worthwhile
+- Keep worklog in caveman style: short, direct, concrete, no filler.
 
 Example note:
 
 ```md
 ## Stage 2 - Cache and lookup
-- Used an in-memory hash map for session lookup because the spec only required temporary in-process storage, and constant-time reads kept the hot path simple.
-- A process-external cache could be a better long-term fit if this needs cross-instance consistency later.
+- Use in-memory hash map for session lookup. Spec ask temp in-process storage. Constant-time reads keep hot path simple.
+- External cache maybe later if cross-instance consistency matters.
 ```
 
 Do not log obvious trivia or restate entire diff.
